@@ -1,15 +1,9 @@
-#include <cstdint>
-#include <cstdio>
-#include <chrono>
-#include <fstream>
+#include <iostream>
 
 #include "Camera/Camera.hpp"
-#include "Hittable/Hittable.hpp"
 #include "HittableList/HittableList.hpp"
 #include "Hittable/Sphere.hpp"
 #include "Hittable/Plane.hpp"
-#include "raytracing.hpp"
-
 #include "Timer/Timer.hpp"
 
 
