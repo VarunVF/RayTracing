@@ -240,6 +240,11 @@ int Camera::writePNG(const char* filename, unsigned char* image, unsigned int wi
 
 	png_set_sBIT(png_ptr, info_ptr, &sig_bit);
 
+	/* Optional gamma chunk is strongly suggested if you have any guess
+	 * as to the correct gamma of the image. */
+	const double gamma = 1 / 0.5;
+	png_set_gAMA(png_ptr, info_ptr, gamma);
+
 	/* Other optional chunks like cHRM, bKGD, tRNS, tIME, oFFs, pHYs. */
 
 	/* Note that if sRGB is present, the gAMA and cHRM chunks must be ignored
