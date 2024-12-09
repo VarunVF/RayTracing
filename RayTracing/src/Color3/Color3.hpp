@@ -9,6 +9,15 @@
 // Color3 is simply an alias for Vec3.
 using Color3 = Vec3;
 
+
+// Convert from linear space to gamma space.
+inline double linearToGamma(double linear_component)
+{
+	if (linear_component > 0.0)
+		return std::sqrt(linear_component);
+	return 0;
+}
+
 // Translate color components from [0, 1] to the byte range [0, 255],
 // and insert them into an output stream.
 void writeColor(std::ostream& stream, const Color3& pixelColor);

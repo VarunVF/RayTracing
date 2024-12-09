@@ -21,7 +21,7 @@ int main(void)
 	
 	{
 		Timer timer;
-		camera.renderPNG(world, "lambertian_diffuse.png");
+		camera.renderPNG(world, "lambertian_diffuse_gamma_corrected.png");
 	}
 
 	std::clog << "Renders finished (press [Enter])...";

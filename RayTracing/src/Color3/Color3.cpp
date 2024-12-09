@@ -8,11 +8,15 @@
 // and insert them into an output stream.
 void writeColor(std::ostream& stream, const Color3& pixelColor)
 {
-	Interval intensity(0.0, 0.999);
 	auto r = pixelColor.x();
 	auto g = pixelColor.y();
 	auto b = pixelColor.z();
 
+	r = linearToGamma(r);
+	g = linearToGamma(g);
+	b = linearToGamma(b);
+
+	static const Interval intensity(0.0, 0.999);
 	int translatedRed   = (int)(256 * intensity.clamp(r));
 	int translatedGreen = (int)(256 * intensity.clamp(g));
 	int translatedBlue  = (int)(256 * intensity.clamp(b));
@@ -25,11 +29,15 @@ void writeColor(std::ostream& stream, const Color3& pixelColor)
 // and write them to a vector.
 void writeColor(std::vector<uint8_t>& list, const Color3& pixelColor)
 {
-	Interval intensity(0.0, 0.999);
 	auto r = pixelColor.x();
 	auto g = pixelColor.y();
 	auto b = pixelColor.z();
 
+	r = linearToGamma(r);
+	g = linearToGamma(g);
+	b = linearToGamma(b);
+
+	Interval intensity(0.0, 0.999);
 	uint8_t translatedRed   = (uint8_t)(256 * intensity.clamp(r));
 	uint8_t translatedGreen = (uint8_t)(256 * intensity.clamp(g));
 	uint8_t translatedBlue  = (uint8_t)(256 * intensity.clamp(b));
