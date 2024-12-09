@@ -1,5 +1,5 @@
 #include "Vec3.hpp"
-
+#include "raytracing.hpp"
 
 
 Vec3::Vec3()
@@ -46,6 +46,24 @@ Vec3 Vec3::unit_vector() const
 		elements[0] / magnitude,
 		elements[1] / magnitude,
 		elements[2] / magnitude
+	);
+}
+
+Vec3 Vec3::random()
+{
+	return Vec3(
+		random_double(),
+		random_double(),
+		random_double()
+	);
+}
+
+Vec3 Vec3::random(double min, double max)
+{
+	return Vec3(
+		random_double(min, max),
+		random_double(min, max),
+		random_double(min, max)
 	);
 }
 

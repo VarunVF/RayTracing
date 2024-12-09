@@ -36,7 +36,7 @@ void Camera::render(const HittableList& world, const char* filename)
 			for (int sample = 0; sample < samples_per_pixel; sample++)
 			{
 				Ray3 random_ray = getRay(i, j);
-				auto accumulation = rayColor(random_ray, world);
+				auto accumulation = rayColor(random_ray, max_depth, world);
 				pixel_color += accumulation;
 			}
 			pixel_color *= pixel_samples_scale;
@@ -62,7 +62,7 @@ void Camera::renderPNG(const HittableList& world, const char* filename)
 			for (int sample = 0; sample < samples_per_pixel; sample++)
 			{
 				Ray3 random_ray = getRay(i, j);
-				auto accumulation = rayColor(random_ray, world);
+				auto accumulation = rayColor(random_ray, max_depth, world);
 				pixel_color += accumulation;
 			}
 			pixel_color *= pixel_samples_scale;
@@ -131,17 +131,25 @@ Vec3 Camera::sampleSquare() const
 	);
 }
 
-Color3 Camera::rayColor(const Ray3& ray, const HittableList& world) const
+// Get the color for a given scene ray
+Color3 Camera::rayColor(const Ray3& ray, const int depth, const HittableList& world) const
 {
+	if (depth <= 0)
+		return Color3(0.0, 0.0, 0.0);
+
 	HitRecord rec;
-	if (world.hit(ray, Interval(0, infinity), rec))
-		return 0.5 * (rec.normal + Vec3(1, 1, 1));
+	if (world.hit(ray, Interval(0.001, infinity), rec))
+	{
+		// Vec3 direction = random_on_hemisphere(rec.normal);				// Random Diffuse
+		Vec3 direction = rec.normal + random_unit_vector();					// Lambertian Diffuse
+		const double reflectance = 0.5;
+		return reflectance * rayColor(Ray3(rec.p, direction), depth - 1, world);
+		// return 0.5 * (rec.normal + Vec3(1, 1, 1));
+	}
 
 	Vec3 unit_direction = ray.direction().unit_vector();
 	auto a = 0.5 * (unit_direction.y() + 1.0);
-
-	// lerp function
-	return (1.0 - a) * Color3(1.0, 1.0, 1.0) + a * Color3(0.5, 0.7, 1.0);
+	return (1.0 - a)*Color3(1.0, 1.0, 1.0) + a*Color3(0.5, 0.7, 1.0);		// lerp function
 }
 
 int Camera::writePNG(const char* filename, unsigned char* image, unsigned int width, unsigned int height, unsigned int bytes_per_pixel)

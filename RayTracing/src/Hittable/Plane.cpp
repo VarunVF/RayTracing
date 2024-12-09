@@ -3,13 +3,13 @@
 
 
 Plane::Plane(Point3 givenPoint, Vec3 normal)
-	: givenPoint(givenPoint), normal(normal),
+	: givenPoint(givenPoint), normal(normal.unit_vector()),
 	rangeX(Interval::universe), rangeY(Interval::universe), rangeZ(Interval::universe)
 {
 }
 
 Plane::Plane(Point3 givenPoint, Vec3 normal, Interval rangeX, Interval rangeY, Interval rangeZ)
-	: givenPoint(givenPoint), normal(normal),
+	: givenPoint(givenPoint), normal(normal.unit_vector()),
 	rangeX(rangeX), rangeY(rangeY), rangeZ(rangeZ)
 {
 }
