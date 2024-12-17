@@ -157,7 +157,7 @@ int Camera::writePNG(const char* filename, unsigned char* image, unsigned int wi
 	FILE* fp;
 	png_structp png_ptr;
 	png_infop info_ptr;
-	png_colorp palette;
+	// png_colorp palette;
 
 	/* Open the file */
 	fp = fopen(filename, "wb");
@@ -221,10 +221,10 @@ int Camera::writePNG(const char* filename, unsigned char* image, unsigned int wi
 		PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 
 	/* Set the palette if there is one.  REQUIRED for indexed-color images. */
-	palette = (png_colorp)png_malloc(png_ptr,
-		PNG_MAX_PALETTE_LENGTH * (sizeof(png_color)));
+	//palette = (png_colorp)png_malloc(png_ptr,
+	//	PNG_MAX_PALETTE_LENGTH * (sizeof(png_color)));
 	/* ... Set palette colors ... */
-	png_set_PLTE(png_ptr, info_ptr, palette, PNG_MAX_PALETTE_LENGTH);
+	//png_set_PLTE(png_ptr, info_ptr, palette, PNG_MAX_PALETTE_LENGTH);
 	/* You must not free palette here, because png_set_PLTE only makes a link
 	 * to the palette that you allocated.  Wait until you are about to destroy
 	 * the png structure.
@@ -242,8 +242,8 @@ int Camera::writePNG(const char* filename, unsigned char* image, unsigned int wi
 
 	/* Optional gamma chunk is strongly suggested if you have any guess
 	 * as to the correct gamma of the image. */
-	const double gamma = 1 / 0.5;
-	png_set_gAMA(png_ptr, info_ptr, gamma);
+	//const double gamma = 1 / 0.5;
+	//png_set_gAMA(png_ptr, info_ptr, gamma);
 
 	/* Other optional chunks like cHRM, bKGD, tRNS, tIME, oFFs, pHYs. */
 
