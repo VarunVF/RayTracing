@@ -19,7 +19,7 @@ bool Plane::hit(const Ray3& ray, Interval ray_t, HitRecord& recordOut) const
 	// Check for ray parallel to plane
 	constexpr auto epsilon = 1.0e-5;
 	auto projection = dot(ray.direction(), normal);
-	if (projection > epsilon)
+	if (-epsilon < projection && projection < epsilon)  // close to zero
 		return false;
 
 	// Solve for intersection
