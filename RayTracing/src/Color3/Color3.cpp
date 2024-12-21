@@ -37,7 +37,7 @@ void writeColor(std::vector<uint8_t>& list, const Color3& pixelColor)
 	g = linearToGamma(g);
 	b = linearToGamma(b);
 
-	Interval intensity(0.0, 0.999);
+	static const Interval intensity(0.0, 0.999);
 	uint8_t translatedRed   = (uint8_t)(256 * intensity.clamp(r));
 	uint8_t translatedGreen = (uint8_t)(256 * intensity.clamp(g));
 	uint8_t translatedBlue  = (uint8_t)(256 * intensity.clamp(b));

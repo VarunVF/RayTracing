@@ -86,7 +86,7 @@ Vec3 Vec3::operator-() const
 	);
 }
 
-Vec3& Vec3::operator+=(Vec3& other)
+Vec3& Vec3::operator+=(const Vec3& other)
 {
 	elements[0] += other.elements[0];
 	elements[1] += other.elements[1];
@@ -94,7 +94,7 @@ Vec3& Vec3::operator+=(Vec3& other)
 	return *this;
 }
 
-Vec3& Vec3::operator-=(Vec3& other)
+Vec3& Vec3::operator-=(const Vec3& other)
 {
 	elements[0] -= other.elements[0];
 	elements[1] -= other.elements[1];

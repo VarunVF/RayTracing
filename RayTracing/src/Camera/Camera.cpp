@@ -36,8 +36,7 @@ void Camera::render(const HittableList& world, const char* filename)
 			for (int sample = 0; sample < samples_per_pixel; sample++)
 			{
 				Ray3 random_ray = getRay(i, j);
-				auto accumulation = rayColor(random_ray, max_depth, world);
-				pixel_color += accumulation;
+				pixel_color += rayColor(random_ray, max_depth, world);
 			}
 			pixel_color *= pixel_samples_scale;
 			writeColor(imageFile, pixel_color);
@@ -62,8 +61,7 @@ void Camera::renderPNG(const HittableList& world, const char* filename)
 			for (int sample = 0; sample < samples_per_pixel; sample++)
 			{
 				Ray3 random_ray = getRay(i, j);
-				auto accumulation = rayColor(random_ray, max_depth, world);
-				pixel_color += accumulation;
+				pixel_color += rayColor(random_ray, max_depth, world);
 			}
 			pixel_color *= pixel_samples_scale;
 			writeColor(image_buffer, pixel_color);
