@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <fstream>
+#include <thread>
 #include <vector>
 
 #include <zlib.h>
@@ -11,7 +12,8 @@
 #include "raytracing.hpp"
 
 
-void Camera::render(const HittableList& world, const char* filename)
+
+void Camera::renderPPM(const HittableList& world, const char* filename)
 {
 	initialise();
 
@@ -50,10 +52,12 @@ void Camera::renderPNG(const HittableList& world, const char* filename)
 {
 	initialise();
 
+	std::cout << "Render started (single-threaded).\n";
+
 	// Write colors to the buffer
 	for (int j = 0; j < image_height; j++)
 	{
-		std::clog << "Scanlines remaining: " << image_height - j << "\n";
+		// std::cout << "Scanlines remaining: " << image_height - j << "\n";
 
 		for (int i = 0; i < image_width; i++)
 		{
@@ -71,7 +75,58 @@ void Camera::renderPNG(const HittableList& world, const char* filename)
 	// Write PNG using the buffer
 	writePNG(filename, image_buffer.data(), image_width, image_height);
 
-	std::clog << "Render finished and saved to " << filename << "\n";
+	std::cout << "Render finished and saved to " << filename << "\n";
+}
+
+void Camera::renderRows(int startRow, int endRow, const HittableList& world)
+{
+	for (int j = startRow; j < endRow; j++)
+		for (int i = 0; i < image_width; i++)
+		{
+			Color3 pixel_color(0.0, 0.0, 0.0);
+			for (int sample = 0; sample < samples_per_pixel; sample++)
+			{
+				Ray3 random_ray = getRay(i, j);
+				pixel_color += rayColor(random_ray, max_depth, world);
+			}
+			pixel_color *= pixel_samples_scale;
+			int offset = (j * image_width + i) * 3;
+			writeColorAtPos(image_buffer.data() + offset, pixel_color);
+		}
+}
+
+void Camera::renderPNGParallel(const HittableList& world, const char* filename)
+{
+	initialise();
+
+	// default construct (all 0)
+	image_buffer.resize(3 * image_width * image_height);
+
+	const int maxThreadCount = std::thread::hardware_concurrency();
+	const int rowsPerThread  = image_height / maxThreadCount;
+	std::vector<std::thread> workers;
+	workers.reserve(maxThreadCount);
+	
+	std::cout << "Render started with " << maxThreadCount << " threads, "
+		<< rowsPerThread << " rows per thread.\n";
+
+	// Start and run threads
+	for (int t = 0; t < maxThreadCount; t++)
+	{
+		int startRow = t * rowsPerThread;
+		int endRow = (t == maxThreadCount - 1) ?
+			image_height : startRow + rowsPerThread;
+		workers.emplace_back(&Camera::renderRows, this, startRow, endRow, world);
+	}
+
+	// Wait for threads to complete
+	for (auto& worker : workers)
+		worker.join();
+
+	// Write PNG file using the buffer
+	writePNG(filename, image_buffer.data(), image_width, image_height);
+
+	std::cout << "Render finished and saved to " << filename << "\n";
 }
 
 void Camera::initialise()
@@ -80,7 +135,8 @@ void Camera::initialise()
 	image_height = image_height < 1 ? 1 : image_height;	// Must be at least 1
 	pixel_samples_scale = 1.0 / samples_per_pixel;
 
-	image_buffer.reserve(3 * image_width * image_height);	// set capacity (RGB = 3 channels)
+	int buffer_size = 3 * image_width * image_height;
+	image_buffer.reserve(buffer_size);					// set capacity (RGB = 3 channels)
 
 	// Viewport dimensions
 	double focal_length = 1.0;							// Camera to viewport distance

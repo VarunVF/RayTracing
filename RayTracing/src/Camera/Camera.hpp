@@ -14,8 +14,11 @@ public:
 	int    max_depth         = 10;		// Maximum number of child rays
 
 
-	void render(const HittableList& world, const char* filename);
+	void renderPPM(const HittableList& world, const char* filename);
 	void renderPNG(const HittableList& world, const char* filename);
+
+	void renderRows(int startRow, int endRow, const HittableList& world);
+	void renderPNGParallel(const HittableList& world, const char* filename);
 
 private:
 	int    image_height;				// Rendered image height
