@@ -14,13 +14,17 @@ public:
 	int    max_depth         = 10;		// Maximum number of child rays
 
 
+	// Render scene to a PPM file
 	void renderPPM(const HittableList& world, const char* filename);
+
+	// Render scene to a PNG file
 	void renderPNG(const HittableList& world, const char* filename);
+
+	// Render scene to a PNG file (multithreaded)
+ 	void renderPNGParallel(const HittableList& world, const char* filename);
 
 private:
 	void renderRows(int startRow, int endRow, const HittableList& world);
-public:
-	void renderPNGParallel(const HittableList& world, const char* filename);
 
 private:
 	int    image_height        = 0;		// Rendered image height
@@ -34,11 +38,19 @@ private:
 
 
 	void initialise();
-	Ray3 getRay(int i, int j) const;
-	Vec3 sampleSquare() const;
-	Color3 rayColor(const Ray3& ray, const int depth, const HittableList& world) const;
+	
+	// Construct a ray from the camera towards a randomly sampled point around pixel (i, j).
+	Ray3 getRay(int i, int j, uint32_t& seed) const;
+	
+	// Construct a vector to a random point in a pixel's square bounds.
+	// Range: x in [-0.5, 0.5), y in [-0.5, 0.5), z = 0
+	Vec3 sampleSquare(uint32_t& seed) const;
+	
+	// Get the color for a given scene ray.
+	Color3 rayColor(const Ray3& ray, const int depth,
+		const HittableList& world, uint32_t& seed) const;
 
-	// Write a png file in RGB format.
+	// Write to a PNG file from a buffer
 	int writePNG(const char* filename, unsigned char* image,
 		unsigned int width, unsigned int height, unsigned int bytes_per_pixel = 3);
 };

@@ -17,8 +17,8 @@ public:
 	double length() const;
 	Vec3 unit_vector() const;
 
-	static Vec3 random();
-	static Vec3 random(double min, double max);
+	static Vec3 random(uint32_t& seed);
+	static Vec3 random(double min, double max, uint32_t& seed);
 
 	double operator[](int i) const;
 	double& operator[](int i);
@@ -117,20 +117,20 @@ inline Vec3 operator/(const Vec3& vector, double k)
 	);
 }
 
-inline Vec3 random_unit_vector()
+inline Vec3 random_unit_vector(uint32_t& seed)
 {
 	while (true)
 	{
-		auto point = Vec3::random();
+		auto point = Vec3::random(seed);
 		auto lensq = point.length_squared();
 		if (1e-160 < lensq && lensq <= 1)
 			return point / std::sqrt(lensq);
 	}
 }
 
-inline Vec3 random_on_hemisphere(const Vec3& normal)
+inline Vec3 random_on_hemisphere(const Vec3& normal, uint32_t& seed)
 {
-	Vec3 on_unit_sphere = random_unit_vector();
+	Vec3 on_unit_sphere = random_unit_vector(seed);
 	if (dot(on_unit_sphere, normal) > 0.0)
 		return on_unit_sphere;
 	else

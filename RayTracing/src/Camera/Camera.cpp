@@ -16,6 +16,7 @@
 void Camera::renderPPM(const HittableList& world, const char* filename)
 {
 	initialise();
+	uint32_t seed;
 
 	std::ofstream imageFile(filename, std::ios_base::out);
 	if (!imageFile.is_open())
@@ -34,11 +35,12 @@ void Camera::renderPPM(const HittableList& world, const char* filename)
 
 		for (int i = 0; i < image_width; i++)
 		{
+			seed = i * j;
 			Color3 pixel_color(0.0, 0.0, 0.0);
 			for (int sample = 0; sample < samples_per_pixel; sample++)
 			{
-				Ray3 random_ray = getRay(i, j);
-				pixel_color += rayColor(random_ray, max_depth, world);
+				Ray3 random_ray = getRay(i, j, seed);
+				pixel_color += rayColor(random_ray, max_depth, world, seed);
 			}
 			pixel_color *= pixel_samples_scale;
 			writeColor(imageFile, pixel_color);
@@ -51,6 +53,7 @@ void Camera::renderPPM(const HittableList& world, const char* filename)
 void Camera::renderPNG(const HittableList& world, const char* filename)
 {
 	initialise();
+	uint32_t seed;
 
 	std::cout << "Render started (single-threaded).\n";
 
@@ -61,11 +64,12 @@ void Camera::renderPNG(const HittableList& world, const char* filename)
 
 		for (int i = 0; i < image_width; i++)
 		{
+			seed = i * j;
 			Color3 pixel_color(0.0, 0.0, 0.0);
 			for (int sample = 0; sample < samples_per_pixel; sample++)
 			{
-				Ray3 random_ray = getRay(i, j);
-				pixel_color += rayColor(random_ray, max_depth, world);
+				Ray3 random_ray = getRay(i, j, seed);
+				pixel_color += rayColor(random_ray, max_depth, world, seed);
 			}
 			pixel_color *= pixel_samples_scale;
 			writeColor(image_buffer, pixel_color);
@@ -80,14 +84,17 @@ void Camera::renderPNG(const HittableList& world, const char* filename)
 
 void Camera::renderRows(int startRow, int endRow, const HittableList& world)
 {
+	uint32_t seed;
+
 	for (int j = startRow; j < endRow; j++)
 		for (int i = 0; i < image_width; i++)
 		{
+			seed = i * j;
 			Color3 pixel_color(0.0, 0.0, 0.0);
 			for (int sample = 0; sample < samples_per_pixel; sample++)
 			{
-				Ray3 random_ray = getRay(i, j);
-				pixel_color += rayColor(random_ray, max_depth, world);
+				Ray3 random_ray = getRay(i, j, seed);
+				pixel_color += rayColor(random_ray, max_depth, world, seed);
 			}
 			pixel_color *= pixel_samples_scale;
 			int offset = (j * image_width + i) * 3;
@@ -161,10 +168,9 @@ void Camera::initialise()
 		- 0.5 * (pixel_delta_u + pixel_delta_v);
 }
 
-// Construct a ray from the camera towards a randomly sampled point around pixel (i, j).
-Ray3 Camera::getRay(int i, int j) const
+Ray3 Camera::getRay(int i, int j, uint32_t& seed) const
 {
-	Point3 offset = sampleSquare();
+	Point3 offset = sampleSquare(seed);
 	Point3 sample_pixel = pixel00_loc
 		+ (i + offset.x()) * pixel_delta_u
 		+ (j + offset.y()) * pixel_delta_v;
@@ -174,19 +180,17 @@ Ray3 Camera::getRay(int i, int j) const
 	return Ray3(ray_origin, ray_direction);
 }
 
-// Construct a vector to a random point in a pixel's square bounds
-// Range: x in [-0.5, 0.5), y in [-0.5, 0.5), z = 0
-Vec3 Camera::sampleSquare() const
+Vec3 Camera::sampleSquare(uint32_t& seed) const
 {
 	return Vec3(
-		random_double() - 0.5,
-		random_double() - 0.5,
+		random_double(seed) - 0.5,
+		random_double(seed) - 0.5,
 		0.0
 	);
 }
 
-// Get the color for a given scene ray
-Color3 Camera::rayColor(const Ray3& ray, const int depth, const HittableList& world) const
+Color3 Camera::rayColor(const Ray3& ray, const int depth,
+	const HittableList& world, uint32_t& seed) const
 {
 	if (depth <= 0)
 		return Color3(0.0, 0.0, 0.0);
@@ -194,10 +198,10 @@ Color3 Camera::rayColor(const Ray3& ray, const int depth, const HittableList& wo
 	HitRecord rec;
 	if (world.hit(ray, Interval(0.001, infinity), rec))
 	{
-		// Vec3 direction = random_on_hemisphere(rec.normal);				// Random Diffuse
-		Vec3 direction = rec.normal + random_unit_vector();					// Lambertian Diffuse
+		// Vec3 direction = random_on_hemisphere(rec.normal);					// Random Diffuse
+		Vec3 direction = rec.normal + random_unit_vector(seed);					// Lambertian Diffuse
 		const double reflectance = 0.5;
-		return reflectance * rayColor(Ray3(rec.p, direction), depth - 1, world);
+		return reflectance * rayColor(Ray3(rec.p, direction), depth - 1, world, seed);
 		// return 0.5 * (rec.normal + Vec3(1, 1, 1));
 	}
 

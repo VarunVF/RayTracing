@@ -49,21 +49,21 @@ Vec3 Vec3::unit_vector() const
 	);
 }
 
-Vec3 Vec3::random()
+Vec3 Vec3::random(uint32_t& seed)
 {
 	return Vec3(
-		random_double(),
-		random_double(),
-		random_double()
+		random_double(seed),
+		random_double(seed),
+		random_double(seed)
 	);
 }
 
-Vec3 Vec3::random(double min, double max)
+Vec3 Vec3::random(double min, double max, uint32_t& seed)
 {
 	return Vec3(
-		random_double(min, max),
-		random_double(min, max),
-		random_double(min, max)
+		random_double(min, max, seed),
+		random_double(min, max, seed),
+		random_double(min, max, seed)
 	);
 }
 
