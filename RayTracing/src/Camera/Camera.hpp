@@ -17,12 +17,14 @@ public:
 	void renderPPM(const HittableList& world, const char* filename);
 	void renderPNG(const HittableList& world, const char* filename);
 
+private:
 	void renderRows(int startRow, int endRow, const HittableList& world);
+public:
 	void renderPNGParallel(const HittableList& world, const char* filename);
 
 private:
-	int    image_height;				// Rendered image height
-	double pixel_samples_scale;			// Color scale factor
+	int    image_height        = 0;		// Rendered image height
+	double pixel_samples_scale = 0.0;	// Color scale factor
 	Point3 center;						// Camera center
 	Point3 pixel00_loc;					// Location of pixel (0, 0)
 	Vec3   pixel_delta_u;				// Offset to pixel to the right
@@ -40,4 +42,3 @@ private:
 	int writePNG(const char* filename, unsigned char* image,
 		unsigned int width, unsigned int height, unsigned int bytes_per_pixel = 3);
 };
-

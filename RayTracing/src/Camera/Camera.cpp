@@ -71,7 +71,7 @@ void Camera::renderPNG(const HittableList& world, const char* filename)
 			writeColor(image_buffer, pixel_color);
 		}
 	}
-
+	
 	// Write PNG using the buffer
 	writePNG(filename, image_buffer.data(), image_width, image_height);
 
