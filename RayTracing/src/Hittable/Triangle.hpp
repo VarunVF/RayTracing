@@ -7,7 +7,8 @@
 class Triangle : public Hittable
 {
 public:
-	Triangle(Point3 a, Point3 b, Point3 c);
+	Triangle(Point3 a, Point3 b, Point3 c,
+		std::shared_ptr<Material> material);
 	virtual ~Triangle() = default;
 
 	bool hit(const Ray3& ray, Interval ray_t, HitRecord& recordOut) const override;
@@ -25,4 +26,7 @@ public:
 	Vec3 AB, BC, CA;
 	Plane plane;
 	double area;
+
+private:
+	std::shared_ptr<Material> m_Material;
 };

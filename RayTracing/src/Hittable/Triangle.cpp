@@ -1,11 +1,13 @@
 #include "Triangle.hpp"
 
 
-Triangle::Triangle(Point3 a, Point3 b, Point3 c)
+Triangle::Triangle(Point3 a, Point3 b, Point3 c,
+	std::shared_ptr<Material> material)
 	: a(a), b(b), c(c),
 	AB(b - a), BC(c - b), CA(a - c),
+	plane(c, cross(AB, BC), material),
 	area(findArea(AB, BC)),
-	plane(c, cross(AB, BC))
+	m_Material(material)
 {
 }
 

@@ -2,15 +2,20 @@
 #include "raytracing.hpp"
 
 
-Plane::Plane(Point3 givenPoint, Vec3 normal)
+Plane::Plane(Point3 givenPoint, Vec3 normal,
+	std::shared_ptr<Material> material)
 	: givenPoint(givenPoint), normal(normal.unit_vector()),
-	rangeX(Interval::universe), rangeY(Interval::universe), rangeZ(Interval::universe)
+	rangeX(Interval::universe), rangeY(Interval::universe), rangeZ(Interval::universe),
+	m_Material(material)
 {
 }
 
-Plane::Plane(Point3 givenPoint, Vec3 normal, Interval rangeX, Interval rangeY, Interval rangeZ)
+Plane::Plane(Point3 givenPoint, Vec3 normal,
+	Interval rangeX, Interval rangeY, Interval rangeZ,
+	std::shared_ptr<Material> material)
 	: givenPoint(givenPoint), normal(normal.unit_vector()),
-	rangeX(rangeX), rangeY(rangeY), rangeZ(rangeZ)
+	rangeX(rangeX), rangeY(rangeY), rangeZ(rangeZ),
+	m_Material(material)
 {
 }
 
@@ -33,6 +38,7 @@ bool Plane::hit(const Ray3& ray, Interval ray_t, HitRecord& recordOut) const
 	recordOut.t = root;
 	recordOut.p = ray.at(recordOut.t);
 	recordOut.setFaceNormal(ray, normal);
+	recordOut.material = m_Material;
 
 	// Check coordinate bounds
 	const auto& intersection = recordOut.p;
