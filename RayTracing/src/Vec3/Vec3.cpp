@@ -49,6 +49,14 @@ Vec3 Vec3::unit_vector() const
 	);
 }
 
+bool Vec3::near_zero() const
+{
+	constexpr auto maxDist = 1.0e-8;
+	return (std::fabs(elements[0]) < maxDist)
+		&& (std::fabs(elements[1]) < maxDist)
+		&& (std::fabs(elements[2]) < maxDist);
+}
+
 Vec3 Vec3::random(uint32_t& seed)
 {
 	return Vec3(

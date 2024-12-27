@@ -2,8 +2,8 @@
 #include "../Interval/Interval.hpp"
 
 
-Sphere::Sphere(const Point3& center, double radius)
-	: m_Center(center), m_Radius(std::fmax(0.0, radius))
+Sphere::Sphere(const Point3& center, double radius, std::shared_ptr<Material> material)
+	: m_Center(center), m_Radius(std::fmax(0.0, radius)), m_Material(material)
 {
 }
 
@@ -37,5 +37,7 @@ bool Sphere::hit(const Ray3& ray, Interval ray_t, HitRecord& recordOut) const
 	recordOut.p = ray.at(recordOut.t);
 	Vec3 outwardNormal = (recordOut.p - m_Center) / m_Radius;
 	recordOut.setFaceNormal(ray, outwardNormal);
+	recordOut.material = m_Material;
+
 	return true;
 }

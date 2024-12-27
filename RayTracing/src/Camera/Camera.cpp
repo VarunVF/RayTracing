@@ -8,6 +8,7 @@
 #include <png.h>
 
 #include "Camera.hpp"
+#include "Material/Material.hpp"
 #include "Color3/Color3.hpp"
 #include "raytracing.hpp"
 
@@ -193,16 +194,16 @@ Color3 Camera::rayColor(const Ray3& ray, const int depth,
 	const HittableList& world, uint32_t& seed) const
 {
 	if (depth <= 0)
-		return Color3(0.0, 0.0, 0.0);
+		return Color3(0, 0, 0);
 
 	HitRecord rec;
 	if (world.hit(ray, Interval(0.001, infinity), rec))
 	{
-		// Vec3 direction = random_on_hemisphere(rec.normal);					// Random Diffuse
-		Vec3 direction = rec.normal + random_unit_vector(seed);					// Lambertian Diffuse
-		const double reflectance = 0.5;
-		return reflectance * rayColor(Ray3(rec.p, direction), depth - 1, world, seed);
-		// return 0.5 * (rec.normal + Vec3(1, 1, 1));
+		Color3 attenuation;
+		Ray3 scattered;
+		if (rec.material->scatter(ray, rec, attenuation, scattered, seed))
+			return attenuation * rayColor(scattered, depth - 1, world, seed);
+		return Color3(0, 0, 0);
 	}
 
 	Vec3 unit_direction = ray.direction().unit_vector();

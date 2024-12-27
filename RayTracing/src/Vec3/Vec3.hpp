@@ -16,6 +16,7 @@ public:
 	double length_squared() const;
 	double length() const;
 	Vec3 unit_vector() const;
+	bool near_zero() const;
 
 	static Vec3 random(uint32_t& seed);
 	static Vec3 random(double min, double max, uint32_t& seed);
@@ -135,6 +136,11 @@ inline Vec3 random_on_hemisphere(const Vec3& normal, uint32_t& seed)
 		return on_unit_sphere;
 	else
 		return -on_unit_sphere;
+}
+
+inline Vec3 reflect(const Vec3& v, const Vec3& normal)
+{
+	return v - 2*dot(v, normal)*normal;
 }
 
 
