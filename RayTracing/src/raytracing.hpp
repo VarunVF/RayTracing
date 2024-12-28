@@ -32,6 +32,12 @@ inline double degrees_to_radians(double degrees)
     return degrees * pi / 180.0;
 }
 
+// Linear interpolation
+inline Vec3 lerp(const Vec3& start, const Vec3& end, double t)
+{
+    return (1.0 - t) * start + t * end;
+}
+
 inline uint32_t pcg_hash(uint32_t input)
 {
     uint32_t state = input * 747796405u + 2891336453u;

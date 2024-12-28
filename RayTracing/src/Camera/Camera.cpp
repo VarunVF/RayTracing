@@ -207,8 +207,8 @@ Color3 Camera::rayColor(const Ray3& ray, const int depth,
 	}
 
 	Vec3 unit_direction = ray.direction().unit_vector();
-	auto a = 0.5 * (unit_direction.y() + 1.0);
-	return (1.0 - a)*Color3(1.0, 1.0, 1.0) + a*Color3(0.5, 0.7, 1.0);		// lerp function
+	auto t = 0.5 * (unit_direction.y() + 1.0);
+	return lerp(Color3(1.0, 1.0, 1.0), Color3(0.5, 0.7, 1.0), t);
 }
 
 int Camera::writePNG(const char* filename, unsigned char* image, unsigned int width, unsigned int height, unsigned int bytes_per_pixel)
