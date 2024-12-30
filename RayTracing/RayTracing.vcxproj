@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Material\Dielectric.cpp" />
     <ClCompile Include="src\Material\Metal.cpp" />
     <ClCompile Include="src\Material\Lambertian.cpp" />
     <ClCompile Include="src\Hittable\Plane.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="src\Vec3\Vec3.cpp" />
     <ClCompile Include="src\Timer\Timer.cpp" />
     <ClCompile Include="src\Hittable\Triangle.cpp" />
+    <ClInclude Include="src\Material\Dielectric.hpp" />
     <ClInclude Include="src\Material\Metal.hpp" />
     <ClInclude Include="src\Material\Lambertian.hpp" />
     <ClInclude Include="src\Hittable\Plane.hpp" />
