@@ -6,7 +6,8 @@ Metal::Metal(const Color3& albedo)
 {
 }
 
-bool Metal::scatter(const Ray3& ray, const HitRecord& record,
+bool Metal::scatter(
+	const Ray3& ray, const HitRecord& record,
 	Color3& attenuationOut, Ray3& scatteredOut, uint32_t& seed) const
 {
 	Vec3 reflected = reflect(ray.direction(), record.normal);

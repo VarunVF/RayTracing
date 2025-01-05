@@ -11,7 +11,8 @@ Dielectric::Dielectric(double refractiveIndex, const Color3& albedo)
 {
 }
 
-bool Dielectric::scatter(const Ray3& ray, const HitRecord& record,
+bool Dielectric::scatter(
+	const Ray3& ray, const HitRecord& record,
 	Color3& attenuationOut, Ray3& scatteredOut, uint32_t& seed) const
 {
 	attenuationOut = m_Albedo;

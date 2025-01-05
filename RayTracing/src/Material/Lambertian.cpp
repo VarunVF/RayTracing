@@ -5,7 +5,8 @@ Lambertian::Lambertian(const Color3& albedo)
 {
 }
 
-bool Lambertian::scatter(const Ray3& ray, const HitRecord& record,
+bool Lambertian::scatter(
+	const Ray3& ray, const HitRecord& record,
 	Color3& attenuationOut, Ray3& scatteredOut, uint32_t& seed) const
 {
 	auto scatterDirection = record.normal + random_unit_vector(seed);
