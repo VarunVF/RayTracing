@@ -7,8 +7,9 @@
 class Triangle : public Hittable
 {
 public:
-	Triangle(Point3 a, Point3 b, Point3 c,
+	Triangle(const Point3& a, const Point3& b, const Point3& c,
 		std::shared_ptr<Material> material);
+	
 	virtual ~Triangle() = default;
 
 	bool hit(const Ray3& ray, Interval ray_t, HitRecord& recordOut) const override;

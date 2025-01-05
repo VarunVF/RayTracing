@@ -1,7 +1,7 @@
 #include "Triangle.hpp"
 
 
-Triangle::Triangle(Point3 a, Point3 b, Point3 c,
+Triangle::Triangle(const Point3& a, const Point3& b, const Point3& c,
 	std::shared_ptr<Material> material)
 	: a(a), b(b), c(c),
 	AB(b - a), BC(c - b), CA(a - c),
