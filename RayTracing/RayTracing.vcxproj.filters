@@ -63,6 +63,9 @@
     <ClCompile Include="src\Material\Dielectric.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Material\DiffuseLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Vec3\Vec3.hpp">
@@ -113,5 +116,31 @@
     <ClInclude Include="src\Material\Dielectric.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Material\DiffuseLight.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="renders\diffuse-metal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\glass-sphere.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\luminous.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\luminous-no-sky.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\triangles-large.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\cornell-box-empty.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\cornell-box-spheres.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
