@@ -122,7 +122,8 @@ inline Vec3 random_unit_vector(uint32_t& seed)
 {
 	while (true)
 	{
-		auto point = Vec3::random(seed);
+		// Get a random vector with components in [-1, 1)
+		auto point = Vec3::random(-1, 1, seed);
 		auto lensq = point.length_squared();
 		if (1e-160 < lensq && lensq <= 1)
 			return point / std::sqrt(lensq);

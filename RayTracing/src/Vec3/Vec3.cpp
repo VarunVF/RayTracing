@@ -57,6 +57,7 @@ bool Vec3::near_zero() const
 		&& (std::fabs(elements[2]) < maxDist);
 }
 
+// Random vector with components in [0, 1).
 Vec3 Vec3::random(uint32_t& seed)
 {
 	return Vec3(

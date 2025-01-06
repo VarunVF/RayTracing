@@ -173,14 +173,15 @@ Ray3 Camera::getRay(int i, int j, uint32_t& seed) const
 {
 	Point3 offset = sampleSquare(seed);
 	Point3 sample_pixel = pixel00_loc
-		+ (i + offset.x()) * pixel_delta_u
-		+ (j + offset.y()) * pixel_delta_v;
+		+ ((i + offset.x()) * pixel_delta_u)
+		+ ((j + offset.y()) * pixel_delta_v);
 
 	Point3 ray_origin = center;
 	Vec3 ray_direction = sample_pixel - center;
 	return Ray3(ray_origin, ray_direction);
 }
 
+// Random vector to a point in the [-0.5, -0.5]-[+0.5, +0.5] unit square.
 Vec3 Camera::sampleSquare(uint32_t& seed) const
 {
 	return Vec3(
@@ -201,9 +202,13 @@ Color3 Camera::rayColor(const Ray3& ray, const int depth,
 	{
 		Color3 attenuation;
 		Ray3 scattered;
+
+		Color3 emissionColor = rec.material->emitted(ray, seed);
+		Color3 scatteredColor;
 		if (rec.material->scatter(ray, rec, attenuation, scattered, seed))
-			return attenuation * rayColor(scattered, depth - 1, world, seed);
-		return Color3(0, 0, 0);
+			scatteredColor = attenuation * rayColor(scattered, depth - 1, world, seed);
+		
+		return emissionColor + scatteredColor;
 	}
 
 	Vec3 unit_direction = ray.direction().unit_vector();
