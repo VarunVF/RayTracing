@@ -30,11 +30,11 @@ It follows the implementation described in [Ray Tracing in One Weekend](https://
 
 Here are some images rendered with this ray tracer:
 
-- **Diffuse and Metal Materials**  
-  ![Diffuse and Metal Spheres](RayTracing/renders/diffuse-metal.png)
+- **Cornell Box Scene**  
+  ![Cornell Box](RayTracing/renders/cornell-box-spheres.png)
 
-- **Glass Sphere with Reflection and Refraction**  
-  ![Glass Sphere](RayTracing/renders/glass-sphere.png)
+- **Glass, Metal Spheres with Reflection and Refraction**  
+  ![Glass, Metal Spheres](RayTracing/renders/glass-sphere.png)
 
 Find more examples in the `renders/` folder.
 
