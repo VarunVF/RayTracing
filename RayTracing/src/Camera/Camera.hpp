@@ -15,6 +15,8 @@ public:
 	int    samples_per_pixel = 10;		// Antialiasing sample count
 	int    max_depth         = 10;		// Maximum number of child rays
 
+	double vfov = 90;					// Vertical viewing angle (field of view)
+
 
 	// Render scene to a PPM file
 	void renderPPM(const HittableList& world, const char* filename);

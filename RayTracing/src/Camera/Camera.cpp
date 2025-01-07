@@ -146,7 +146,9 @@ void Camera::initialise()
 
 	// Viewport dimensions
 	double focal_length = 1.0;							// Camera to viewport distance
-	double viewport_height = 2.0;
+	double theta = degrees_to_radians(vfov);
+	double h = std::tan(theta/2);
+	double viewport_height = 2.0 * h * focal_length;
 	double viewport_width = viewport_height * ((double)image_width / image_height);
 	center = Point3(0, 0, 0);
 
