@@ -6,7 +6,6 @@
 constexpr double infinity = std::numeric_limits<double>::infinity();
 
 
-// Default interval is empty
 Interval::Interval()
 	: min(+infinity), max(-infinity)
 {
@@ -29,13 +28,11 @@ double Interval::clamp(double value) const
 	return value;
 }
 
-// Inclusive bounds check
 bool Interval::contains(double value) const
 {
 	return min <= value && value <= max;
 }
 
-// Exclusive bounds check
 bool Interval::surrounds(double value) const
 {
 	return min < value && value < max;

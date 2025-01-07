@@ -5,6 +5,8 @@
 #include "../Ray3/Ray3.hpp"
 
 
+// Camera that contains rendering settings
+// and sends rays into the scene
 class Camera
 {
 public:
@@ -37,13 +39,13 @@ private:
 	std::vector<uint8_t> image_buffer;
 
 
+	// Setup rendering settings before render
 	void initialise();
 	
 	// Construct a ray from the camera towards a randomly sampled point around pixel (i, j).
 	Ray3 getRay(int i, int j, uint32_t& seed) const;
 	
-	// Construct a vector to a random point in a pixel's square bounds.
-	// Range: x in [-0.5, 0.5), y in [-0.5, 0.5), z = 0
+	// Random vector to a point in the [-0.5, -0.5]-[+0.5, +0.5] unit square.
 	Vec3 sampleSquare(uint32_t& seed) const;
 	
 	// Get the color for a given scene ray.

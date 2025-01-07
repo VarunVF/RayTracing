@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #include <fstream>
 #include <thread>
 #include <vector>
@@ -144,7 +142,7 @@ void Camera::initialise()
 	pixel_samples_scale = 1.0 / samples_per_pixel;
 
 	int buffer_size = 3 * image_width * image_height;
-	image_buffer.reserve(buffer_size);					// set capacity (RGB = 3 channels)
+	image_buffer.reserve(buffer_size);					// Set capacity (RGB = 3 channels)
 
 	// Viewport dimensions
 	double focal_length = 1.0;							// Camera to viewport distance
@@ -181,7 +179,6 @@ Ray3 Camera::getRay(int i, int j, uint32_t& seed) const
 	return Ray3(ray_origin, ray_direction);
 }
 
-// Random vector to a point in the [-0.5, -0.5]-[+0.5, +0.5] unit square.
 Vec3 Camera::sampleSquare(uint32_t& seed) const
 {
 	return Vec3(

@@ -17,7 +17,7 @@ public:
 	// Area of a triangle with the two given sides as vectors
 	static inline double findArea(const Vec3& x, const Vec3& y)
 	{
-		// 0.5 * xy * sin(Z)
+		// For a triangle XYZ, area = 0.5 * xy * sin(Z)
 		return 0.5 * cross(x, y).length();
 	}
 

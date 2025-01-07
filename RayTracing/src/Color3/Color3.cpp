@@ -47,6 +47,8 @@ void writeColor(std::vector<uint8_t>& list, const Color3& pixelColor)
 	list.push_back(translatedBlue);
 }
 
+// Translate color components from [0, 1] to the byte range [0, 255],
+// and write them at the specified address.
 void writeColorAtPos(uint8_t* position, const Color3& pixelColor)
 {
 	auto r = pixelColor.x();

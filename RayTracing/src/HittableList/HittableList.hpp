@@ -6,6 +6,7 @@
 #include "Hittable/Hittable.hpp"
 
 
+// A collection of Hittable objects
 class HittableList
 {
 public:
