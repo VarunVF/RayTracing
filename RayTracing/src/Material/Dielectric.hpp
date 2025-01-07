@@ -14,6 +14,10 @@ public:
 		Color3& attenuationOut, Ray3& scatteredOut, uint32_t& seed) const override;
 
 private:
+	// Schlick's approximation for reflectance
+	static double reflectance(double cosine, double refractiveIndex);
+
+private:
 	double m_RefractiveIndex;
 	Color3 m_Albedo;
 };

@@ -145,6 +145,7 @@ inline Vec3 reflect(const Vec3& v, const Vec3& normal)
 }
 
 // Requires incident and normal vectors to have unit length.
+// NOTE: does not check for TIR condition, check before using.
 // i = incident ray
 // n = normal to interface
 // refractionRatio = initial refractive index / final refractive index
@@ -155,13 +156,7 @@ inline Vec3 refract(const Vec3& incident, const Vec3& normal, double refractionR
 	// T = refractionRatio * (incident + normal*(cosI - sqrt(1 - sinSquaredT));
 	
 	const double cosI = -dot(incident, normal);
-	const double sinSquaredT
-		= refractionRatio * refractionRatio * (1.0 - cosI * cosI);
-	
-	// Handle TIR
-	if (sinSquaredT > 1.0)
-		return reflect(incident, normal);
-
+	const double sinSquaredT = refractionRatio * refractionRatio * (1.0 - cosI * cosI);
 	const double cosT = std::sqrt(1.0 - sinSquaredT);
 	return refractionRatio * incident + (refractionRatio * cosI - cosT) * normal;
 }
