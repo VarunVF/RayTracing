@@ -16,6 +16,8 @@ public:
 	int    max_depth         = 10;		// Maximum number of child rays
 
 	double vfov = 90;					// Vertical viewing angle (field of view)
+	
+	bool do_draw_sky = true;			// Whether to draw a sky as the background
 
 
 	// Render scene to a PPM file
