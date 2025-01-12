@@ -33,8 +33,14 @@ Here are some images rendered with this ray tracer:
 - **Cornell Box Scene**  
   ![Cornell Box](RayTracing/renders/cornell-box-spheres.png)
 
-- **Glass, Metal Spheres with Reflection and Refraction**  
-  ![Glass, Metal Spheres](RayTracing/renders/glass-sphere.png)
+- **Hollow Glass Sphere with Reflection and Refraction**  
+  ![Hollow Glass Sphere](RayTracing/renders/schlick-approx.png)
+
+- **Luminous Sphere Without Background**
+  ![Luminous Sphere in Dark Environment](RayTracing/renders/luminous-no-sky.png)
+
+- **Wide Angle View**
+  ![Wide Angle Scene of 2 Spheres](RayTracing/renders/fov90.png)
 
 Find more examples in the `renders/` folder.
 
