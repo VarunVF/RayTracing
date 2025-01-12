@@ -121,25 +121,31 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="renders\diffuse-metal.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="renders\glass-sphere.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="renders\luminous.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="renders\luminous-no-sky.png">
+    <Image Include="renders\cornell-box-empty.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="renders\triangles-large.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="renders\cornell-box-empty.png">
+    <Image Include="renders\underwater-tir.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\schlick-approx.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\fov90.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="renders\cornell-box-spheres.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\underwater-tir-no-fuzz.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\luminous-no-sky.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="renders\luminous-sky.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
